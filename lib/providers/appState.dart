@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:millenium/screens/information.dart';
 import 'package:millenium/widgets/custom_button.dart';
 
 class AppProvider with ChangeNotifier{
@@ -16,7 +17,7 @@ class AppProvider with ChangeNotifier{
   Widget body(){
     switch(_index){
       case 0:
-        return CustomText(msg: "Information",);
+        return Information();
       case 1:
         return CustomText(msg: "Schedule",);
       case 2:

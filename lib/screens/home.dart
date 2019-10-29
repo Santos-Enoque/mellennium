@@ -17,16 +17,7 @@ class _HomeState extends State<Home> {
     AppProvider app = Provider.of<AppProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Millennium"),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.person_outline), onPressed: (){
-            changeScreen(context, Register());
-          })
-        ],
-      ),
-      
-      drawer: Drawer(
-        child: ListView(),
+        title: Text("Corrida Millennium BIM"),
       ),
       body: app.body(),
       bottomNavigationBar: BottomNavigationBar(
@@ -37,8 +28,9 @@ class _HomeState extends State<Home> {
           type: BottomNavigationBarType.fixed,
           items: [
         BottomNavigationBarItem(icon: Icon(Icons.info), title: Text("Information")),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("Information")),
-        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("Information")),
+        BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("Schedule")),
+        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("Map")),
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text("Registration")),
       ]),
     );
   }
