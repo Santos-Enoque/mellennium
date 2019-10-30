@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:millenium/screens/information.dart';
+import 'package:millenium/screens/map.dart';
 import 'package:millenium/screens/schedule.dart';
 import 'package:millenium/widgets/custom_button.dart';
 
@@ -22,7 +23,7 @@ class AppProvider with ChangeNotifier{
       case 1:
         return Schedule();
       case 2:
-        return CustomText(msg: "Maps",);
+        return RouteMap();
       default:
         return CustomText(msg: "Default",);
     }
