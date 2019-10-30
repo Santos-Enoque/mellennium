@@ -25,7 +25,11 @@ class AppProvider with ChangeNotifier{
       case 2:
         return RouteMap();
       default:
-        return CustomText(msg: "Default",);
+        return Center(
+          child: CircularProgressIndicator(
+            value: null,
+          ),
+        );
     }
   }
 

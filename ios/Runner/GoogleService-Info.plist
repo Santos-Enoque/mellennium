@@ -15,21 +15,21 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.everythingflutter.www.millenium</string>
+	<string>mz.co.millenniumbim.corrida</string>
 	<key>PROJECT_ID</key>
 	<string>corrida-millennium-bim</string>
 	<key>STORAGE_BUCKET</key>
 	<string>corrida-millennium-bim.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:202729184332:ios:ba0def5ad0ef23606328e9</string>
 	<key>DATABASE_URL</key>
