@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:millenium/screens/information.dart';
+import 'package:millenium/screens/schedule.dart';
 import 'package:millenium/widgets/custom_button.dart';
 
 class AppProvider with ChangeNotifier{
@@ -19,7 +20,7 @@ class AppProvider with ChangeNotifier{
       case 0:
         return Information();
       case 1:
-        return CustomText(msg: "Schedule",);
+        return Schedule();
       case 2:
         return CustomText(msg: "Maps",);
       default:
