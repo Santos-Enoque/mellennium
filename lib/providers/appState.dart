@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:millenium/screens/details.dart';
 import 'package:millenium/screens/information.dart';
 import 'package:millenium/screens/map.dart';
 import 'package:millenium/screens/schedule.dart';
@@ -25,11 +26,7 @@ class AppProvider with ChangeNotifier{
       case 2:
         return RouteMap();
       default:
-        return Center(
-          child: CircularProgressIndicator(
-            value: null,
-          ),
-        );
+        return Details();
     }
   }
 
