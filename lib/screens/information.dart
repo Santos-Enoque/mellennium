@@ -13,6 +13,13 @@ class _InformationState extends State<Information> {
 
   @override
   Widget build(BuildContext context) {
+    if (title == '') {
+      return Center(
+        child: CircularProgressIndicator(
+          value: null,
+        ),
+      );
+    }
     return Center(
       child: SingleChildScrollView(
         child :Card(
