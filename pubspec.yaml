@@ -34,6 +34,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   date_utils:
+  photo_view:
 
 flutter_icons:
   image_path: "images/ic_launcher.png"
