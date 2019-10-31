@@ -1,9 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:millenium/providers/appState.dart';
 import 'package:millenium/services/style.dart';
 import 'package:millenium/widgets/custom_button.dart';
 import 'package:millenium/widgets/input_fields.dart';
+import 'package:provider/provider.dart';
 
 class Details extends StatefulWidget {
+  String _uid;
+
+  Details(String uid) {
+    this._uid = uid;
+  }
+
   @override
   _DetailsState createState() => _DetailsState();
 }
@@ -14,8 +24,6 @@ enum ShirtSize { Pequena, Media, Grande, Extra_Grande }
 
 class _DetailsState extends State<Details> {
 
-// ...
-
   ShirtSize _shirtSize = ShirtSize.Pequena;
   Gender _gender = Gender.M;
   Category _categorias = Category.Populares;
@@ -25,27 +33,40 @@ class _DetailsState extends State<Details> {
   int _chosenCategoryIndex = 0;
   int _chosenShirtIndex = 0;
 
+  TextEditingController _person_name = TextEditingController(text: '');
+  TextEditingController _surname = TextEditingController(text: '');
+  TextEditingController _age = TextEditingController(text: '');
+  TextEditingController _phone = TextEditingController(text: '');
+  TextEditingController _nationality = TextEditingController(text: '');
+  TextEditingController _passport = TextEditingController(text: '');
+
+  String _top_text = 'Por favor, preencha o formulário abaixo para terminar'
+      ' o seu registro';
+
   @override
   Widget build(BuildContext context) {
     return Form(
       child: ListView(
         children: <Widget>[
-
           SizedBox(height: 20,),
-
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "Nome", controller: null, icon: Icons.person_outline, obscure: false,),
+            child: Text(_top_text, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),),
           ),
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "Apelido", controller: null, icon: Icons.people_outline, obscure: true,),
+            child: InputFieldArea(hint: "Nome", controller: _person_name, icon: Icons.person_outline, obscure: false,),
           ),
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "Idade", controller: null, icon: Icons.calendar_today, obscure: true,),
+            child: InputFieldArea(hint: "Apelido", controller: _surname, icon: Icons.people_outline, obscure: false,),
+          ),
+          SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: InputFieldArea(hint: "Idade", controller: _age, icon: Icons.calendar_today, obscure: false,),
           ),
           SizedBox(height: 20,),
           Padding(
@@ -81,17 +102,17 @@ class _DetailsState extends State<Details> {
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "Telefone", controller: null, icon: Icons.contact_phone, obscure: true,),
+            child: InputFieldArea(hint: "Telefone", controller: _phone, icon: Icons.contact_phone, obscure: false,),
           ),
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "Nacionalidade", controller: null, icon: Icons.flag, obscure: true,),
+            child: InputFieldArea(hint: "Nacionalidade", controller: _nationality, icon: Icons.flag, obscure: false,),
           ),
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: InputFieldArea(hint: "BI/Passaporte", controller: null, icon: Icons.subtitles, obscure: true,),
+            child: InputFieldArea(hint: "BI/Passaporte", controller: _passport, icon: Icons.subtitles, obscure: false,),
           ),
           SizedBox(height: 20,),
           Padding(
@@ -268,7 +289,36 @@ class _DetailsState extends State<Details> {
             padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
             child: RaisedButton(
               onPressed: (){
+                if(isInvalid(_person_name, 3) || isInvalid(_surname, 3) ||
+                   isInvalid(_age, 2) || isInvalid(_phone, 5) ||
+                    isInvalid(_nationality, 3) || isInvalid(_passport, 5)) {
+                  Scaffold.of(context).showSnackBar(new SnackBar(
+                    content: new Text('Um dos campos é inválido'),
+                  ));
+                  return;
+                }
 
+                DocumentReference userRef = Firestore.instance.collection('participants')
+                    .document(widget._uid);
+                userRef.updateData({
+                  'name': _person_name.text,
+                  'surname': _surname.text,
+                  'age': int.parse(_age.text),
+                  'contact': int.parse(_phone.text),
+                  'nationality': _nationality.text,
+                  'documentNr': _passport.text,
+                  'gender': _gender == Gender.M ? 'M' : 'F',
+                  'chosenCategory': _chosenCategory,
+                  'chosenCategoryIndex': _chosenCategoryIndex,
+                  'chosenShirtIndex': _chosenShirtIndex,
+                  'chosenShirt': _chosenShirt,
+                }).then((v) {
+                  AppProvider app = Provider.of<AppProvider>(context);
+                  app.changeIndex(0);
+                  Scaffold.of(context).showSnackBar(new SnackBar(
+                    content: new Text('Dados Guardados!'),
+                  ));
+                });
               },
               textColor: Colors.white,
               color: Colors.pink,
@@ -279,7 +329,9 @@ class _DetailsState extends State<Details> {
             padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
             child: FlatButton(
               onPressed: (){
-
+                FirebaseAuth.instance.signOut();
+                AppProvider app = Provider.of<AppProvider>(context);
+                app.changeIndex(0);
               },
               textColor: Colors.pink,
               child: Text('Sair (log out)'),
@@ -289,6 +341,48 @@ class _DetailsState extends State<Details> {
         ],
       ),
     );
+  }
+
+  bool isInvalid(TextEditingController controller, int limit) {
+    return controller.text.length < limit;
+  }
+
+  void getProfile() async {
+    String uid = widget._uid;
+    DocumentSnapshot snapshot = await Firestore.instance.collection('participants')
+        .document(uid).get();
+    setState(() {
+      _person_name.text = snapshot.data['name'];
+      _surname.text = snapshot.data['surname'];
+      _age.text = snapshot.data['age'] != null ? snapshot.data['age'].toString() : "";
+      _phone.text = snapshot.data['contact'] != null ? snapshot.data['contact'].toString() : "";
+      _nationality.text = snapshot.data['nationality'];
+      _passport.text = snapshot.data['documentNr'];
+      if (snapshot.data['gender'] == 'M') {
+        _gender = Gender.M;
+      } else {
+        _gender = Gender.F;
+      }
+      if(snapshot.data['chosenCategoryIndex'] != null) {
+        _chosenCategoryIndex = snapshot.data['chosenCategoryIndex'];
+        _chosenCategory = snapshot.data['chosenCategory'];
+        _categorias = Category.values[_chosenCategoryIndex];
+        if (snapshot.data['participating'] == true) {
+          _top_text = 'Você está registado na categoria ' + _chosenCategory +
+              ' com o número ' + snapshot.data['dorsal'];
+        }
+      }
+      if(snapshot.data['chosenShirtIndex'] != null) {
+        _chosenShirtIndex = snapshot.data['chosenShirtIndex'];
+        _chosenShirt = snapshot.data['chosenShirt'];
+        _shirtSize = ShirtSize.values[_chosenShirtIndex];
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getProfile();
   }
 
 }

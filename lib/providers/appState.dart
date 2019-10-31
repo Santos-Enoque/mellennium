@@ -27,11 +27,11 @@ class AppProvider with ChangeNotifier{
       case 2:
         return RouteMap();
       default:
-        return new FutureBuilder(
-            future: FirebaseAuth.instance.currentUser(),
+        return new StreamBuilder(
+            stream: FirebaseAuth.instance.currentUser().asStream(),
             builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
               if(snapshot.data != null) {
-                return Details();
+                return Details(snapshot.data.uid);
               }
               return Login();
             }

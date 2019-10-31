@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:millenium/services/style.dart';
-import 'package:millenium/widgets/custom_button.dart';
+import 'package:millenium/providers/appState.dart';
 import 'package:millenium/widgets/input_fields.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -40,7 +41,33 @@ class _LoginState extends State<Login> {
               textColor: Colors.white,
               child: Text('Registar'),
               onPressed: () {
-
+                if(_email.text.length > 2 && _password.text.length > 5) {
+                  AppProvider app = Provider.of<AppProvider>(context);
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email.text, password: _password.text)
+                      .then((result) {
+                        app.changeIndex(0);
+                        Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text('Registado: ' + result.user.email),
+                        ));
+                      }).catchError((error) {
+                        if (error.toString().contains('ERROR_EMAIL_ALREADY_IN_USE')) {
+                          FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.text, password: _password.text)
+                              .then((result2) {
+                            if(result2.user != null) {
+                              app.changeIndex(0);
+                              Scaffold.of(context).showSnackBar(new SnackBar(
+                                content: new Text('Logado: ' + result2.user.email),
+                              ));
+                            }
+                          })
+                              .catchError((error){
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text(error.toString()),
+                            ));
+                          });
+                        }
+                      });
+                }
               },
             ),
             FlatButton(
