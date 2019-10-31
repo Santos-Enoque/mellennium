@@ -8,13 +8,22 @@ class Details extends StatefulWidget {
   _DetailsState createState() => _DetailsState();
 }
 
-enum SingingCharacter { lafayette, jefferson }
+enum Gender { M, F }
+enum Category { Populares, Tricilo, Cadeirante, Federados, Pessoal, BIM, Caminhada }
+enum ShirtSize { Pequena, Media, Grande, Extra_Grande }
 
 class _DetailsState extends State<Details> {
 
 // ...
 
-  SingingCharacter _character = SingingCharacter.lafayette;
+  ShirtSize _shirtSize = ShirtSize.Pequena;
+  Gender _gender = Gender.M;
+  Category _categorias = Category.Populares;
+
+  String _chosenCategory = 'Populares';
+  String _chosenShirt = 'Pequena';
+  int _chosenCategoryIndex = 0;
+  int _chosenShirtIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,37 +50,31 @@ class _DetailsState extends State<Details> {
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
-            child: CustomText(msg: "Genero", color: grey, size: 20,),
+            child: CustomText(msg: "Genero", color: black, size: 20,),
           ),
           SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
             children: <Widget>[
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    height: 220,
-                    width: 180,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: grey[400],
-                              offset: Offset(2, 1),
-                              blurRadius: 3
-                          )
-                        ]
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset("images/female.png", width: 160, height: 160,),
-                        CustomText(msg: "Female", size: 28, color: grey,)
-                      ],
-                    )),
+              ListTile(
+                title: const Text('Masculino'),
+                leading: Radio(
+                  value: Gender.M,
+                  groupValue: _gender,
+                  onChanged: (Gender value) {
+                    setState(() { _gender = value; });
+                  },
+                ),
               ),
-
+              ListTile(
+                title: const Text('Feminino'),
+                leading: Radio(
+                  value: Gender.F,
+                  groupValue: _gender,
+                  onChanged: (Gender value) {
+                    setState(() { _gender = value; });
+                  },
+                ),
+              ),
             ],
           ),
 
@@ -91,25 +94,170 @@ class _DetailsState extends State<Details> {
             child: InputFieldArea(hint: "BI/Passaporte", controller: null, icon: Icons.subtitles, obscure: true,),
           ),
           SizedBox(height: 20,),
-          Column(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+            child: CustomText(msg: "Categoria", color: black, size: 20,),
+          ),
+          Wrap(
             children: <Widget>[
               ListTile(
-                title: const Text('Categoria 1'),
+                title: const Text('Populares'),
                 leading: Radio(
-                  value: SingingCharacter.lafayette,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter value) {
-                    setState(() { _character = value; });
+                  value: Category.Populares,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Populares';
+                      _chosenCategoryIndex = 0;
+                      _categorias = value;
+                    });
                   },
                 ),
               ),
               ListTile(
-                title: const Text('Categoria 2'),
+                title: const Text('Deficientes Triciclos'),
                 leading: Radio(
-                  value: SingingCharacter.jefferson,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter value) {
-                    setState(() { _character = value; });
+                  value: Category.Tricilo,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Deficientes Triciclos';
+                      _chosenCategoryIndex = 1;
+                      _categorias = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Deficientes Cadeirantes'),
+                leading: Radio(
+                  value: Category.Cadeirante,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Deficientes Cadeirantes';
+                      _chosenCategoryIndex = 2;
+                      _categorias = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Federados'),
+                leading: Radio(
+                  value: Category.Federados,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Federados';
+                      _chosenCategoryIndex = 3;
+                      _categorias = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Pessoal do BIM'),
+                leading: Radio(
+                  value: Category.Pessoal,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Pessoal do BIM';
+                      _chosenCategoryIndex = 4;
+                      _categorias = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Reformado do BIM'),
+                leading: Radio(
+                  value: Category.BIM,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Reformados do BIM';
+                      _chosenCategoryIndex = 5;
+                      _categorias = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Caminhada'),
+                leading: Radio(
+                  value: Category.Caminhada,
+                  groupValue: _categorias,
+                  onChanged: (Category value) {
+                    setState(() {
+                      _chosenCategory = 'Caminhada';
+                      _chosenCategoryIndex = 6;
+                      _categorias = value; });
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+            child: CustomText(msg: "Camiseta", color: black, size: 20,),
+          ),
+          Wrap(
+            children: <Widget>[
+              ListTile(
+                title: const Text('Pequena'),
+                leading: Radio(
+                  value: ShirtSize.Pequena,
+                  groupValue: _shirtSize,
+                  onChanged: (ShirtSize value) {
+                    setState(() {
+                      _chosenShirt = 'Pequena';
+                      _chosenShirtIndex = 0;
+                      _shirtSize = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Média'),
+                leading: Radio(
+                  value: ShirtSize.Media,
+                  groupValue: _shirtSize,
+                  onChanged: (ShirtSize value) {
+                    setState(() {
+                      _chosenShirt = 'Média';
+                      _chosenShirtIndex = 1;
+                      _shirtSize = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Grande'),
+                leading: Radio(
+                  value: ShirtSize.Grande,
+                  groupValue: _shirtSize,
+                  onChanged: (ShirtSize value) {
+                    setState(() {
+                      _chosenShirt = 'Grande';
+                      _chosenShirtIndex = 2;
+                      _shirtSize = value; });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Extra Grande'),
+                leading: Radio(
+                  value: ShirtSize.Extra_Grande,
+                  groupValue: _shirtSize,
+                  onChanged: (ShirtSize value) {
+                    setState(() {
+                      _chosenShirt = 'Extra Grande';
+                      _chosenShirtIndex = 3;
+                      _shirtSize = value;
+                    });
                   },
                 ),
               ),
@@ -117,29 +265,25 @@ class _DetailsState extends State<Details> {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(25),
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: primary
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CustomText(msg: "Salvar", color: white, size: 22, weight: FontWeight.w600,),
-                  ],
-                ),
-              ),
+            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+            child: RaisedButton(
+              onPressed: (){
+
+              },
+              textColor: Colors.white,
+              color: Colors.pink,
+              child: Text('Salvar'),
             ),
           ),
-          SizedBox(height: 20,),
-          CustomText(msg: "Esqueceu a palavra-passe", color: primary,),
-          SizedBox(height: 20,),
           Padding(
-            padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-            child: CustomText(msg: "Criar Conta", weight: FontWeight.w300,),
+            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+            child: FlatButton(
+              onPressed: (){
+
+              },
+              textColor: Colors.pink,
+              child: Text('Sair (log out)'),
+            ),
           ),
 
         ],

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:millenium/providers/appState.dart';
-import 'package:millenium/screens/register.dart';
-import 'package:millenium/services/common.dart';
-import 'package:millenium/services/style.dart';
-import 'package:millenium/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -27,10 +23,10 @@ class _HomeState extends State<Home> {
           },
           type: BottomNavigationBarType.fixed,
           items: [
-        BottomNavigationBarItem(icon: Icon(Icons.info), title: Text("Information")),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("Schedule")),
-        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("Map")),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text("Registration")),
+        BottomNavigationBarItem(icon: Icon(Icons.info), title: Text("Informação")),
+        BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("Agenda")),
+        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("Mapa")),
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text("Registo")),
       ]),
     );
   }

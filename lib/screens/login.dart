@@ -14,53 +14,44 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Millennium"),
-      ),
-      backgroundColor: white,
-      body: Form(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset("images/mil.png", width: 280,),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: InputFieldArea(hint: "Email", controller: _email, icon: Icons.alternate_email, obscure: false,),
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: InputFieldArea(hint: "Password", controller: _password, icon: Icons.lock_outline, obscure: true,),
-              ),
-              SizedBox(height: 40,),
-              Container(
-                width: MediaQuery.of(context).size.width - 37,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: primary
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CustomText(msg: "Login", color: white, size: 22, weight: FontWeight.w600,),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              CustomText(msg: "Forgot password", color: primary,),
-              SizedBox(height: 20,),
-              CustomText(msg: "Create account", weight: FontWeight.w300,)
+    return Form(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text('Registe-se abaixo para participar da corrida', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+            ),
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: InputFieldArea(hint: "Email", controller: _email, icon: Icons.alternate_email, obscure: false,),
+            ),
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: InputFieldArea(hint: "Senha", controller: _password, icon: Icons.lock_outline, obscure: true,),
+            ),
+            SizedBox(height: 40,),
+            RaisedButton(
+              color: Colors.pink,
+              textColor: Colors.white,
+              child: Text('Registar'),
+              onPressed: () {
 
-            ],
-          ),
+              },
+            ),
+            FlatButton(
+              textColor: Colors.pink,
+              child: Text('Esqueci a senha'),
+              onPressed: () {
+
+              },
+            ),
+
+          ],
         ),
       ),
     );

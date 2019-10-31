@@ -47,8 +47,8 @@ class _InformationState extends State<Information> {
     DocumentSnapshot snapshot = await Firestore.instance.collection('ui')
         .document('homepage').get();
     setState(() {
-      title = snapshot.data['informationCards'][0]['title_en'].replaceAll("\\n", "\n");
-      text = snapshot.data['informationCards'][0]['body_en'].replaceAll("\\n", "\n");
+      title = snapshot.data['informationCards'][0]['title_pt'].replaceAll("\\n", "\n");
+      text = snapshot.data['informationCards'][0]['body_pt'].replaceAll("\\n", "\n");
     });
   }
 

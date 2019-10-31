@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 class Schedule extends StatefulWidget {
 
@@ -31,12 +32,12 @@ class _ScheduleState extends State<Schedule> {
 
   Widget _buildSessionItem(DocumentSnapshot data, int index) {
     if (data == null) {
-      return Text('Loading');
+      return Text('A carregar');
     }
     String dateTime = data['sessions'][index]['dateTime'];
     bool firstSession = data['sessions'][index]['firstSessionOfDay'];
     String location = '';
-    String title = data['sessions'][index]['title_en'];
+    String title = data['sessions'][index]['title_pt'];
     int month = int.parse(dateTime.substring(4, 6));
     int day = int.parse(dateTime.substring(6, 8));
     String hourString = dateTime.substring(8, 10);
@@ -58,7 +59,7 @@ class _ScheduleState extends State<Schedule> {
           visible: firstSession,
           child: Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(dayString + ', ' + monthString, style: TextStyle(fontSize: 24),)
+              child: Text(dayString + ' de ' + monthString, style: TextStyle(fontSize: 24),)
           ),
         ),
         Padding(
